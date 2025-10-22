@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>최준혁 - 10월 21일(화) 일간 업무보고</title>
+  <title>최준혁 - 일간 업무보고</title>
   <style>
     :root{
       --bg:#f8fafc;
@@ -22,182 +22,60 @@
       background:linear-gradient(180deg, var(--person-color), #ffffff);
       color:var(--text);
     }
-    .container{
-      max-width:900px;
-      margin:0 auto;
-    }
+    .container{ max-width:900px; margin:0 auto; }
     .today-header{
-      text-align:center;
-      margin-bottom:32px;
-      padding:32px 20px;
+      text-align:center; margin-bottom:32px; padding:32px 20px;
       background:var(--person-color);
-      border-radius:20px;
-      box-shadow:0 4px 12px rgba(0,0,0,.1);
+      border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,.1);
       border:2px solid var(--person-border);
     }
-    .today-header h1{
-      margin:0;
-      font-size:36px;
-      font-weight:800;
-      color:var(--person-text);
-      letter-spacing:-.5px;
-    }
-    .today-header .date{
-      margin:8px 0 0;
-      font-size:20px;
-      color:#334155;
-      font-weight:600;
-    }
+    .today-header h1{ margin:0; font-size:36px; font-weight:800; color:var(--person-text); letter-spacing:-.5px; }
+    .today-header .date{ margin:8px 0 0; font-size:20px; color:#334155; font-weight:600; }
     .today-header .role{
-      margin-top:12px;
-      display:inline-block;
-      padding:6px 16px;
-      background:#dbeafe;
-      color:#1e40af;
-      border-radius:20px;
-      font-size:14px;
-      font-weight:700;
-      border:2px solid #93c5fd;
+      margin-top:12px; display:inline-block; padding:6px 16px;
+      background:#dbeafe; color:#1e40af; border-radius:20px;
+      font-size:14px; font-weight:700; border:2px solid #93c5fd;
     }
     .card{
-      background:var(--card);
-      border:2px solid var(--person-border);
-      border-radius:16px;
-      padding:24px;
-      margin-bottom:24px;
+      background:var(--card); border:2px solid var(--person-border);
+      border-radius:16px; padding:24px; margin-bottom:24px;
       box-shadow:0 6px 20px rgba(0,0,0,.08);
     }
-    h2{
-      font-size:20px;
-      margin:0 0 20px;
-      color:var(--person-text);
-      font-weight:700;
-      padding-bottom:12px;
-      border-bottom:2px solid var(--person-border);
-    }
-    .work-content ul{
-      margin:0;
-      padding-left:24px;
-    }
-    .work-content li{
-      margin:12px 0;
-      font-size:15px;
-      line-height:1.7;
-    }
-    .work-content a{
-      color:var(--accent);
-      text-decoration:none;
-    }
-    .work-content a:hover{
-      text-decoration:underline;
-    }
-    .summary-section{
-      background:var(--person-color);
-      border:2px solid var(--person-border);
-      border-radius:12px;
-      padding:20px;
-    }
-    .summary-section h3{
-      margin:0 0 12px;
-      color:var(--person-text);
-      font-size:16px;
-    }
-    .summary-section p{
-      margin:0;
-      font-size:14px;
-      line-height:1.7;
-      color:#475569;
-    }
-    .foot{
-      margin-top:20px;
-      padding-top:16px;
-      border-top:1px solid #e2e8f0;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-    }
-
-    /* 달력(타임라인) 및 저장 버튼 스타일 추가 */
-    .toolbar {
-      display:flex;
-      gap:8px;
-      justify-content:flex-end;
-      margin-bottom:12px;
-      align-items:center;
-    }
+    h2{ font-size:20px; margin:0 0 20px; color:var(--person-text);
+      font-weight:700; padding-bottom:12px; border-bottom:2px solid var(--person-border);}
+    .work-content ul{ margin:0; padding-left:24px; }
+    .work-content li{ margin:12px 0; font-size:15px; line-height:1.7; }
+    .foot{ margin-top:20px; padding-top:16px; border-top:1px solid #e2e8f0; color:var(--muted); font-size:12px; text-align:center;}
+    .toolbar{ display:flex; gap:8px; justify-content:flex-end; margin-bottom:12px; flex-wrap:wrap;}
     .toolbar button{
-      padding:8px 10px;
-      border-radius:8px;
-      border:1px solid var(--person-border);
-      background:var(--card);
-      cursor:pointer;
-      font-weight:600;
+      padding:8px 10px; border-radius:8px; border:1px solid var(--person-border);
+      background:var(--card); cursor:pointer; font-weight:600;
     }
-    /* 오늘 항목: 각 li 자체를 contentEditable로 사용 (프리폼) */
-    .today-list-item{
-      padding:8px;
-      border-radius:8px;
-      min-height:26px;
-      line-height:1.5;
-      background:transparent;
-    }
-    .today-list-item[contenteditable="true"]{
-      background:#fffdf6;
-      outline:2px dashed rgba(59,130,246,0.12);
-    }
-    .timeline {
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      margin:8px 0;
-    }
-    .timeline button{
-      padding:6px 8px;
-      border-radius:6px;
-      border:1px solid #e6eefc;
-      background:transparent;
-      cursor:pointer;
-    }
-    /* 현재 실제 '당월' (오늘이 속한 월) — 진한 파랑 */
-    .timeline button.current-month{
-      background:var(--accent);
-      color:#fff;
-      border-color:var(--accent);
-    }
-    /* 사용자가 선택(조회)한 월 — 연한 하늘색 표시 */
-    .timeline button.viewed{
-      background:#bfdbfe; /* 연한 하늘색 */
-      color:#1e3a8a;
-      border-color:#93c5fd;
-    }
-    /* 월에 저장된 데이터가 있을 때(옵션) — 아주 연한 표시 */
-    .timeline button.has-data{
-      background:#eef6ff;
-      color:#1e40af;
-      border-color:#dbeafe;
-    }
-    .month-summary { margin-top:12px; }
-    .week-block { margin:10px 0; padding:10px; border-radius:8px; background:#fff; border:1px solid #eef2ff;}
-    .week-block h4{ margin:0 0 8px; font-size:15px; }
+    .timeline{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0;}
+    .timeline button{padding:6px 8px; border-radius:6px; border:1px solid #e6eefc; background:transparent; cursor:pointer;}
+    .timeline button.current-month{ background:var(--accent); color:#fff; border-color:var(--accent);}
+    .timeline button.viewed{ background:#bfdbfe; color:#1e3a8a; border-color:#93c5fd;}
+    .timeline button.has-data{ background:#eef6ff; color:#1e40af; border-color:#dbeafe;}
+    .week-block{margin:10px 0; padding:10px; border-radius:8px; background:#fff; border:1px solid #eef2ff;}
+    .week-block h4{margin:0 0 8px; font-size:15px;}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- 개인 헤더 -->
     <div class="today-header">
       <h1>최준혁</h1>
       <div class="role">매니저</div>
-      <div class="date" id="headerDate">2025년 10월 21일 (화)</div>
+      <div class="date" id="headerDate"></div>
     </div>
 
-    <!-- 툴바: 금일 저장 및 연도 이동 -->
     <div class="toolbar">
-      <button id="saveTodayBtn">금일 업무 저장</button>
+      <button id="saveTodayBtn">💾 금일 저장</button>
+      <button id="exportBtn">📤 데이터 내보내기</button>
+      <button id="importBtn">☁️ JSON 불러오기</button>
       <button id="prevYearBtn">&lt; 이전년</button>
       <button id="nextYearBtn">다음년 &gt;</button>
     </div>
 
-    <!-- 금일 업무 -->
     <div class="card" id="todayCard">
       <h2>📋 금일 업무 내용</h2>
       <div class="work-content">
@@ -209,390 +87,159 @@
       </div>
     </div>
 
-    <!-- 주간 요약 카드: 달력(타임라인) + 요약 표시 -->
     <div class="card">
       <h2>📊 월별 업무 내용</h2>
-
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
         <div id="currentYearLabel" style="font-weight:700"></div>
-        <div class="timeline" id="monthTimeline" aria-hidden="false"></div>
+        <div class="timeline" id="monthTimeline"></div>
       </div>
-
       <div id="monthSummary" class="month-summary">
-        <!-- 주차별 요약이 여기에 렌더됩니다 -->
         <p style="color:#64748b" id="noDataNotice">저장된 요약이 없습니다.</p>
       </div>
-
-      <div class="foot">
-        * 데이터는 브라우저 localStorage에 저장됩니다.
-      </div>
+      <div class="foot">* 데이터는 브라우저 localStorage에 저장되며, 내보내기/불러오기/공유 기능으로 확인 가능합니다.</div>
     </div>
   </div>
 
-  <script>
-  (function(){
-    const headerDateEl = document.getElementById('headerDate');
-    const saveTodayBtn = document.getElementById('saveTodayBtn');
-    const prevYearBtn = document.getElementById('prevYearBtn');
-    const nextYearBtn = document.getElementById('nextYearBtn');
-    const currentYearLabel = document.getElementById('currentYearLabel');
-    const monthTimeline = document.getElementById('monthTimeline');
-    const monthSummary = document.getElementById('monthSummary');
-    const noDataNotice = document.getElementById('noDataNotice');
-    const todayList = document.getElementById('todayList');
+<script>
+(function(){
+  const headerDateEl = document.getElementById('headerDate');
+  const saveTodayBtn = document.getElementById('saveTodayBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const importBtn = document.getElementById('importBtn');
+  const currentYearLabel = document.getElementById('currentYearLabel');
+  const monthTimeline = document.getElementById('monthTimeline');
+  const monthSummary = document.getElementById('monthSummary');
+  const noDataNotice = document.getElementById('noDataNotice');
+  const todayList = document.getElementById('todayList');
 
-    let viewYear = new Date().getFullYear();
-    let viewMonth = new Date().getMonth();
+  let viewYear = new Date().getFullYear();
+  let viewMonth = new Date().getMonth();
 
-    function formatDateLabel(d){
-      return new Intl.DateTimeFormat('ko-KR', {year:'numeric', month:'numeric', day:'numeric', weekday:'short'}).format(d);
-    }
-    function monthKey(y, m){
-      const mm = String(m+1).padStart(2,'0');
-      return `reports_${y}-${mm}`;
-    }
-    function weekOfMonth(date){
-      const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-      const firstWeekday = (firstDay.getDay() + 6) % 7;
-      return Math.ceil((date.getDate() + firstWeekday) / 7);
-    }
+  function formatDateLabel(d){
+    return new Intl.DateTimeFormat('ko-KR', {year:'numeric', month:'numeric', day:'numeric', weekday:'short'}).format(d);
+  }
+  function monthKey(y,m){ return `reports_${y}-${String(m+1).padStart(2,'0')}`; }
+  function loadMonth(y,m){ return JSON.parse(localStorage.getItem(monthKey(y,m))||'[]'); }
+  function saveMonth(y,m,arr){ localStorage.setItem(monthKey(y,m), JSON.stringify(arr)); }
 
-    function loadMonth(y,m){
-      const key = monthKey(y,m);
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : [];
-    }
-    function saveMonth(y,m,arr){
-      localStorage.setItem(monthKey(y,m), JSON.stringify(arr));
-    }
+  function collectTodayFromDOM(){
+    const items = Array.from(todayList.children).map(li=>li.innerHTML.trim()).filter(t=>t!=='');
+    const workHtml = `<ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+    const today = new Date();
+    return { dateISO: today.toISOString(), dateLabel: formatDateLabel(today), workHtml };
+  }
 
-    // helper: create an editable li element (프리폼)
-    function makeListItem(htmlContent){
-      const li = document.createElement('li');
-      li.className = 'today-list-item';
-      li.innerHTML = htmlContent || '';
-      li.contentEditable = 'true';
-      // Enter: 새 줄 생성, Backspace(빈 줄에서): 줄 삭제
-      li.addEventListener('keydown', (e)=>{
-        if(e.key === 'Enter'){
-          e.preventDefault();
-          const newLi = makeListItem(''); // 빈 새 줄
-          li.parentNode.insertBefore(newLi, li.nextSibling);
-          // focus new li
-          const sel = window.getSelection();
-          const range = document.createRange();
-          range.selectNodeContents(newLi);
-          sel.removeAllRanges();
-          sel.addRange(range);
-        } else if(e.key === 'Backspace' || e.key === 'Delete'){
-          // if li is empty (or only <br>) and caret at start, remove and move focus previous
-          const text = li.innerText.replace(/\u00A0/g,'').trim();
-          const sel = window.getSelection();
-          const atStart = sel.anchorOffset === 0 && sel.focusOffset === 0;
-          if((text === '' || text === '\n') && atStart){
-            e.preventDefault();
-            const prev = li.previousElementSibling;
-            li.remove();
-            if(prev){
-              const sel2 = window.getSelection();
-              const range2 = document.createRange();
-              range2.selectNodeContents(prev);
-              sel2.removeAllRanges();
-              sel2.addRange(range2);
-            }
-          }
-        }
+  function saveToday(){
+    const today = new Date();
+    const entry = collectTodayFromDOM();
+    const y=today.getFullYear(), m=today.getMonth();
+    const arr = loadMonth(y,m);
+    const key = today.toISOString().slice(0,10);
+    const idx = arr.findIndex(e=>e.dateISO.slice(0,10)===key);
+    if(idx>=0) arr[idx]=entry; else arr.push(entry);
+    arr.sort((a,b)=>new Date(a.dateISO)-new Date(b.dateISO));
+    saveMonth(y,m,arr);
+    renderMonth(y,m);
+    alert("금일 업무 저장 완료");
+  }
+
+  function renderTimeline(y){
+    currentYearLabel.textContent = `${y}년`;
+    monthTimeline.innerHTML='';
+    const today = new Date();
+    for(let m=0;m<12;m++){
+      const btn=document.createElement('button');
+      btn.textContent=`${m+1}월`;
+      if(y===today.getFullYear() && m===today.getMonth()) btn.classList.add('current-month');
+      if(m===viewMonth && y===viewYear) btn.classList.add('viewed');
+      if(loadMonth(y,m).length) btn.classList.add('has-data');
+      btn.onclick=()=>{viewMonth=m;viewYear=y;renderMonth(y,m);};
+      monthTimeline.appendChild(btn);
+    }
+  }
+
+  function renderMonth(y,m){
+    renderTimeline(y);
+    monthSummary.innerHTML='';
+    const data=loadMonth(y,m);
+    if(!data.length){ noDataNotice.style.display='block'; return; }
+    noDataNotice.style.display='none';
+    const groups={};
+    data.forEach(it=>{
+      const dt=new Date(it.dateISO);
+      const wk=Math.ceil((dt.getDate()+((new Date(dt.getFullYear(),dt.getMonth(),1).getDay()+6)%7))/7);
+      (groups[wk]??=[]).push(it);
+    });
+    Object.keys(groups).sort((a,b)=>a-b).forEach(wk=>{
+      const block=document.createElement('div');
+      block.className='week-block';
+      const h=document.createElement('h4');h.textContent=`${m+1}월 ${wk}주차`;block.appendChild(h);
+      groups[wk].forEach(it=>{
+        const wrap=document.createElement('div');
+        wrap.style.cssText="margin-bottom:12px;padding:8px;border:1px solid #eef6ff;border-radius:6px;background:#fbfdff";
+        wrap.innerHTML=`<div style="font-weight:700">${it.dateLabel}</div><div style="margin-top:8px;line-height:1.6">${it.workHtml}</div>`;
+        block.appendChild(wrap);
       });
-      return li;
+      monthSummary.appendChild(block);
+    });
+  }
+
+  // JSON export/import 기능
+  function exportData(){
+    const allKeys = Object.keys(localStorage).filter(k=>k.startsWith('reports_'));
+    const obj={};
+    allKeys.forEach(k=>obj[k]=JSON.parse(localStorage.getItem(k)));
+    const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download="reports_data.json";
+    a.click();
+  }
+
+  async function importData(){
+    const fileInput=document.createElement('input');
+    fileInput.type='file'; fileInput.accept='.json';
+    fileInput.onchange=async()=>{
+      const file=fileInput.files[0];
+      if(!file)return;
+      const text=await file.text();
+      try{
+        const obj=JSON.parse(text);
+        Object.entries(obj).forEach(([k,v])=>localStorage.setItem(k,JSON.stringify(v)));
+        alert('데이터 불러오기 완료!');
+        renderMonth(viewYear,viewMonth);
+      }catch(e){alert('JSON 파일이 올바르지 않습니다.');}
+    };
+    fileInput.click();
+  }
+
+  headerDateEl.textContent=formatDateLabel(new Date());
+  renderMonth(viewYear,viewMonth);
+
+  saveTodayBtn.onclick=saveToday;
+  exportBtn.onclick=exportData;
+  importBtn.onclick=importData;
+
+  // 외부 접근을 위한 전역 등록
+  window.renderMonth = renderMonth;
+})();
+
+// 🚀 GitHub Pages 자동 불러오기 기능
+(async function loadSharedData(){
+  try {
+    const res = await fetch('data.json');
+    if (res.ok) {
+      const json = await res.json();
+      Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
+      console.log('✅ data.json 로드 완료');
+      window.renderMonth?.(new Date().getFullYear(), new Date().getMonth());
+    } else {
+      console.warn('⚠️ data.json 파일이 없습니다.');
     }
-
-    // enhance any existing plain <li> in the todayList to have editable behavior
-    function enhanceExistingList(){
-      const existing = Array.from(todayList.children);
-      if(existing.length === 0){
-        todayList.appendChild(makeListItem(''));
-        return;
-      }
-      existing.forEach(oldLi=>{
-        const html = oldLi.innerHTML;
-        const newLi = makeListItem(html);
-        oldLi.replaceWith(newLi);
-      });
-    }
-
-    function loadTodayIntoDOM(entry){
-      const tmp = document.createElement('div');
-      tmp.innerHTML = entry.workHtml;
-      const ul = tmp.querySelector('ul');
-      if(ul){
-        todayList.innerHTML = ul.innerHTML;
-      } else {
-        todayList.innerHTML = entry.workHtml; // fallback
-      }
-      // enhance replaced list items
-      enhanceExistingList();
-    }
-
-    // 오늘 목록을 DOM에서 수집
-    function collectTodayFromDOM(dateForEntry = new Date()){
-      const items = Array.from(todayList.children).map(li=>li.innerHTML.trim()).filter(t=> t !== '' && t !== '<br>');
-      const workHtml = `<ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
-      return {
-        dateISO: dateForEntry.toISOString(),
-        dateLabel: formatDateLabel(dateForEntry),
-        workHtml
-      };
-    }
-
-    // 오늘목록을 편집 가능/비가변으로 토글
-    function setTodayEditable(flag){
-      Array.from(todayList.children).forEach(li=>{
-        li.contentEditable = flag ? 'true' : 'false';
-        li.style.background = flag ? '#fffdf6' : 'transparent';
-      });
-    }
-
-    // 오늘 저장 (수정 가능)
-    function saveToday(){
-      const today = new Date();
-      const entry = collectTodayFromDOM(today);
-      const y = today.getFullYear(), m = today.getMonth();
-      const arr = loadMonth(y,m);
-      const ymd = today.toISOString().slice(0,10);
-      const idx = arr.findIndex(it=> it.dateISO.slice(0,10) === ymd);
-      if(idx >= 0) arr[idx] = entry; else arr.push(entry);
-      arr.sort((a,b)=> new Date(a.dateISO) - new Date(b.dateISO));
-      saveMonth(y,m,arr);
-      renderMonth(viewYear, viewMonth);
-      // 저장 후에도 편집 가능 상태 유지
-      setTodayEditable(true);
-      alert('금일 업무가 저장되었습니다.');
-    }
-
-    // month timeline 렌더 (1-12) — 클래스 로직 개선: current-month 및 viewed 사용
-    function renderTimeline(year){
-      currentYearLabel.textContent = `${year}년`;
-      monthTimeline.innerHTML = '';
-      const today = new Date();
-      const todayY = today.getFullYear();
-      const todayM = today.getMonth();
-      for(let m=0;m<12;m++){
-        const btn = document.createElement('button');
-        btn.textContent = `${m+1}월`;
-        // mark if this is the real current month (today)
-        if(year === todayY && m === todayM){
-          btn.classList.add('current-month');
-        }
-        // mark if this is the viewed/selected month
-        if(m === viewMonth && year === viewYear){
-          btn.classList.add('viewed');
-        }
-        // optional: mark months that have stored data
-        const arr = loadMonth(year,m);
-        if(arr.length) btn.classList.add('has-data');
-        btn.addEventListener('click', ()=>{
-          viewYear = year;
-          viewMonth = m;
-          // re-render timeline so classes update (viewed/current-month)
-          renderTimeline(viewYear);
-          renderMonth(viewYear, viewMonth);
-        });
-        monthTimeline.appendChild(btn);
-      }
-    }
-
-    // 월별 렌더 (수정/삭제 기능은 기존 구현을 그대로 사용)
-    function renderMonth(y,m){
-      renderTimeline(y);
-      monthSummary.innerHTML = '';
-      const data = loadMonth(y,m);
-      if(!data.length){
-        noDataNotice.style.display = 'block';
-        return;
-      }
-      noDataNotice.style.display = 'none';
-      const groups = {};
-      data.forEach(it=>{
-        const dt = new Date(it.dateISO);
-        const wk = weekOfMonth(dt);
-        if(!groups[wk]) groups[wk] = [];
-        groups[wk].push(it);
-      });
-      const keys = Object.keys(groups).map(Number).sort((a,b)=>a-b);
-      keys.forEach(wk=>{
-        const block = document.createElement('div');
-        block.className = 'week-block';
-        const h = document.createElement('h4');
-        h.textContent = `${m+1}월 ${wk}주차`;
-        block.appendChild(h);
-
-        groups[wk].forEach(it=>{
-          const entryWrap = document.createElement('div');
-          entryWrap.style.marginBottom = '12px';
-          entryWrap.style.padding = '8px';
-          entryWrap.style.borderRadius = '6px';
-          entryWrap.style.background = '#fbfdff';
-          entryWrap.style.border = '1px solid #eef6ff';
-
-          const headerRow = document.createElement('div');
-          headerRow.style.display = 'flex';
-          headerRow.style.justifyContent = 'space-between';
-          headerRow.style.alignItems = 'center';
-          const title = document.createElement('div');
-          title.textContent = it.dateLabel;
-          title.style.fontWeight = '700';
-
-          const actions = document.createElement('div');
-          actions.style.display = 'flex';
-          actions.style.gap = '6px';
-
-          const editBtn = document.createElement('button'); editBtn.textContent = '수정';
-          const delBtn = document.createElement('button'); delBtn.textContent = '삭제';
-          const saveBtn = document.createElement('button'); saveBtn.textContent = '저장';
-          const cancelBtn = document.createElement('button'); cancelBtn.textContent = '취소';
-          [editBtn, delBtn, saveBtn, cancelBtn].forEach(b=>{
-            b.style.padding = '4px 8px';
-            b.style.borderRadius = '6px';
-            b.style.border = '1px solid #dde6f7';
-            b.style.background = 'white';
-            b.style.cursor = 'pointer';
-            b.style.fontSize = '13px';
-          });
-          saveBtn.style.display = 'none';
-          cancelBtn.style.display = 'none';
-
-          actions.appendChild(editBtn);
-          actions.appendChild(delBtn);
-          actions.appendChild(saveBtn);
-          actions.appendChild(cancelBtn);
-          headerRow.appendChild(title);
-          headerRow.appendChild(actions);
-          entryWrap.appendChild(headerRow);
-
-          const content = document.createElement('div');
-          content.className = 'entry-content';
-          content.innerHTML = it.workHtml;
-          content.style.marginTop = '8px';
-          content.style.lineHeight = '1.6';
-          content.contentEditable = 'false';
-          content.style.minHeight = '30px';
-          entryWrap.appendChild(content);
-
-          editBtn.addEventListener('click', ()=>{
-            content.contentEditable = 'true';
-            content.focus();
-            editBtn.style.display = 'none';
-            delBtn.style.display = 'none';
-            saveBtn.style.display = 'inline-block';
-            cancelBtn.style.display = 'inline-block';
-            content.dataset.orig = content.innerHTML;
-          });
-          cancelBtn.addEventListener('click', ()=>{
-            content.innerHTML = content.dataset.orig || content.innerHTML;
-            content.contentEditable = 'false';
-            editBtn.style.display = 'inline-block';
-            delBtn.style.display = 'inline-block';
-            saveBtn.style.display = 'none';
-            cancelBtn.style.display = 'none';
-          });
-          saveBtn.addEventListener('click', ()=>{
-            const arr = loadMonth(y,m);
-            const idx = arr.findIndex(a=> a.dateISO === it.dateISO);
-            if(idx === -1){ alert('저장 대상을 찾을 수 없습니다.'); return; }
-            arr[idx].workHtml = content.innerHTML;
-            saveMonth(y,m,arr);
-            renderMonth(y,m);
-          });
-          delBtn.addEventListener('click', ()=>{
-            if(!confirm('이 항목을 삭제하시겠습니까?')) return;
-            const arr = loadMonth(y,m);
-            const idx = arr.findIndex(a=> a.dateISO === it.dateISO);
-            if(idx === -1) return;
-            arr.splice(idx,1);
-            saveMonth(y,m,arr);
-            renderMonth(y,m);
-          });
-
-          block.appendChild(entryWrap);
-        });
-
-        monthSummary.appendChild(block);
-      });
-    }
-
-    // importStaticDataForcefully 정의가 있으면 사용 (기존 정적 섹션 임포트 유지)
-    // (원본에 정의되어 있다면 호출됩니다.)
-    // 초기화
-    (function init(){
-       // 1) 오늘 날짜 표시
-       headerDateEl.textContent = formatDateLabel(new Date());
- 
-       // 2) 정적 데이터 임포트(있으면)
-       if(typeof importStaticDataForcefully === 'function'){
-         try { importStaticDataForcefully(); } catch(e){ /* ignore */ }
-       }
- 
-       // 3) enhance existing today list items into editable items with remove buttons
-      enhanceExistingList();
- 
-       // 4) if there is a saved entry for today, load it (overwrites DOM)
-       const today = new Date();
-       const arr = loadMonth(today.getFullYear(), today.getMonth());
-       const todayYmd = today.toISOString().slice(0,10);
-       const todayEntry = arr.find(it=> it.dateISO.slice(0,10) === todayYmd);
-       if(todayEntry){
-         loadTodayIntoDOM(todayEntry);
-         // ensure enhanced after load
-         enhanceExistingList();
-       } else {
-         // keep DOM (now enhanced) editable
-         setTodayEditable(true);
-       }
- 
-       viewYear = new Date().getFullYear();
-       viewMonth = new Date().getMonth();
-       renderMonth(viewYear, viewMonth);
-     })();
- 
-     // 바인딩
-     saveTodayBtn.addEventListener('click', saveToday);
- 
-     // 단축키 저장
-     window.addEventListener('keydown', (e)=>{
-       if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
-         e.preventDefault();
-         saveToday();
-       }
-     });
- 
-   })();
-  </script>
+  } catch (e) {
+    console.warn('⚠️ data.json 불러오기 실패:', e);
+  }
+})();
+</script>
 </body>
 </html>
-
-<!--
-이 파일을 모두가 볼 수 있게 서버에 올리는 방법:
-
-1. Github Pages (무료, 정적):
-   - github.com에서 새 저장소 생성 후 파일 업로드.
-   - Settings > Pages에서 브랜치 선택 후 공개.
-   - URL 예시: https://username.github.io/repo/[뉴스그룹] 일간보고_251021_최준혁.html
-
-2. Netlify/Vercel (무료, 정적):
-   - netlify.com 또는 vercel.com에서 새 프로젝트 생성 후 파일 업로드.
-   - 자동으로 공개 URL 생성.
-
-3. 직접 서버(예: nginx/apache):
-   - 서버의 웹 루트(예: /var/www/html)에 파일 복사.
-   - http://yourdomain.com/[뉴스그룹] 일간보고_251021_최준혁.html 로 접근.
-
-4. 임시 공유(ngrok, local server):
-   - 터미널에서: python -m http.server 8000
-   - ngrok.com에서 ngrok http 8000 실행 → 외부 URL 생성.
-
-5. 사내/팀 서버:
-   - 사내 웹서버에 파일 업로드 후 URL 공유.
-
-※ 개인정보/내부정보가 있다면 공개 전에 꼭 검토하세요.
--->
-
