@@ -325,10 +325,9 @@
       const json = await res.json();
       Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
       console.log('✅ data.json 로드 완료');
-      const today = new Date();
-      window.renderMonth?.(today.getFullYear(), today.getMonth());
-      // 👉 금일 업무 즉시 표시
-      if (typeof loadToday === 'function') loadToday();
+
+      // 페이지 갱신 없이 데이터 반영이 안 될 때 강제 새로고침
+      window.location.reload();
     } else {
       console.warn('⚠️ data.json 파일이 없습니다.');
     }
