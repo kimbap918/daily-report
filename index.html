@@ -73,17 +73,13 @@
       <button id="saveTodayBtn">💾 금일 저장</button>
       <button id="exportBtn">📤 데이터 내보내기</button>
       <button id="importBtn">☁️ JSON 불러오기</button>
-      <button id="prevYearBtn">&lt; 이전년</button>
-      <button id="nextYearBtn">다음년 &gt;</button>
     </div>
 
     <div class="card" id="todayCard">
       <h2>📋 금일 업무 내용</h2>
       <div class="work-content">
         <ul id="todayList">
-          <li contenteditable="true"><b>기사 작성</b>: 중앙이코노미 70건, 투어코리아 1건</li>
-          <li contenteditable="true"><b>PressAI 개발</b>: 뉴스 재구성 대량 기사 생성기 동작 검증 및 수정</li>
-          <li contenteditable="true"><b>PressAI 개발</b>: 뉴스 재구성 페이지 기능 및 레이아웃 추가 작업 진행</li>
+          <li contenteditable="true"></li>
         </ul>
       </div>
     </div>
@@ -205,7 +201,6 @@
     });
   }
 
-  // JSON export/import 기능
   function exportData(){
     const allKeys = Object.keys(localStorage).filter(k=>k.startsWith('reports_'));
     const obj={};
@@ -236,7 +231,6 @@
 
   headerDateEl.textContent=formatDateLabel(new Date());
   renderMonth(viewYear,viewMonth);
-
   saveTodayBtn.onclick=saveToday;
   exportBtn.onclick=exportData;
   importBtn.onclick=importData;
