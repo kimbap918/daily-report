@@ -143,17 +143,16 @@
     </div>
 
     <div class="toolbar">
-      <button id="saveTodayBtn">💾 금일 저장</button>
-      <button id="exportBtn">📤 데이터 내보내기</button>
-      <button id="importBtn">☁️ JSON 불러오기</button>
+      <button id="editBtn">✏️ 수정</button>
+      <button id="saveTodayBtn" disabled>💾 저장</button>
+      <button id="exportBtn">📤 내보내기</button>
+      <button id="importBtn">☁️ 불러오기</button>
     </div>
 
     <div class="card" id="todayCard">
       <h2>📋 금일 업무 내용</h2>
       <div class="work-content">
-        <ul id="todayList">
-          <li contenteditable="true"></li>
-        </ul>
+        <ul id="todayList"></ul>
       </div>
     </div>
 
@@ -173,14 +172,15 @@
 <script>
 (function(){
   const headerDateEl = document.getElementById('headerDate');
+  const todayList = document.getElementById('todayList');
+  const editBtn = document.getElementById('editBtn');
   const saveTodayBtn = document.getElementById('saveTodayBtn');
   const exportBtn = document.getElementById('exportBtn');
   const importBtn = document.getElementById('importBtn');
-  const currentYearLabel = document.getElementById('currentYearLabel');
   const monthTimeline = document.getElementById('monthTimeline');
   const monthSummary = document.getElementById('monthSummary');
   const noDataNotice = document.getElementById('noDataNotice');
-  const todayList = document.getElementById('todayList');
+  const currentYearLabel = document.getElementById('currentYearLabel');
 
   let viewYear = new Date().getFullYear();
   let viewMonth = new Date().getMonth();
@@ -199,39 +199,6 @@
     return { dateISO: today.toISOString(), dateLabel: formatDateLabel(today), workHtml };
   }
 
-  function saveToday(){
-    const today = new Date();
-    const entry = collectTodayFromDOM();
-    const y=today.getFullYear(), m=today.getMonth();
-    const arr = loadMonth(y,m);
-    const key = today.toISOString().slice(0,10);
-    const idx = arr.findIndex(e=>e.dateISO.slice(0,10)===key);
-    if(idx>=0) arr[idx]=entry; else arr.push(entry);
-    arr.sort((a,b)=>new Date(a.dateISO)-new Date(b.dateISO));
-    saveMonth(y,m,arr);
-    renderMonth(y,m);
-    alert("💾 금일 업무가 저장되었습니다!");
-  }
-
-  todayList.addEventListener('keydown', e=>{
-    if(e.key==='Enter'){
-      e.preventDefault();
-      const li=document.createElement('li');
-      li.contentEditable='true';
-      li.innerHTML='';
-      e.target.parentNode.insertBefore(li,e.target.nextSibling);
-      li.focus();
-    } else if(e.key==='Backspace'){
-      const li=e.target;
-      if(li.innerText.trim()===''){
-        e.preventDefault();
-        const prev=li.previousElementSibling;
-        li.remove();
-        if(prev) prev.focus();
-      }
-    }
-  });
-
   function renderTimeline(y){
     currentYearLabel.textContent = `${y}년`;
     monthTimeline.innerHTML='';
@@ -240,9 +207,8 @@
       const btn=document.createElement('button');
       btn.textContent=`${m+1}월`;
       if(y===today.getFullYear() && m===today.getMonth()) btn.classList.add('current-month');
-      if(m===viewMonth && y===viewYear) btn.classList.add('viewed');
       if(loadMonth(y,m).length) btn.classList.add('has-data');
-      btn.onclick=()=>{viewMonth=m;viewYear=y;renderMonth(y,m);};
+      btn.onclick=()=>{viewMonth=m;renderMonth(y,m);};
       monthTimeline.appendChild(btn);
     }
   }
@@ -262,8 +228,8 @@
     Object.keys(groups).sort((a,b)=>a-b).forEach(wk=>{
       const block=document.createElement('div');
       block.className='week-block';
-      const h=document.createElement('h4');
-      h.textContent=`${m+1}월 ${wk}주차`;block.appendChild(h);
+      const h=document.createElement('h4'); h.textContent=`${m+1}월 ${wk}주차`;
+      block.appendChild(h);
       groups[wk].forEach(it=>{
         const wrap=document.createElement('div');
         wrap.style.cssText="margin-bottom:12px;padding:8px;border:1px solid #eef6ff;border-radius:6px;background:#fbfdff";
@@ -272,6 +238,44 @@
       });
       monthSummary.appendChild(block);
     });
+  }
+
+  function toggleEditMode(enable){
+    Array.from(todayList.querySelectorAll('li')).forEach(li=>{
+      li.contentEditable = enable;
+      li.style.background = enable ? '#fffdf6' : 'transparent';
+    });
+    editBtn.disabled = enable;
+    saveTodayBtn.disabled = !enable;
+  }
+
+  function saveToday(){
+    const today = new Date();
+    const entry = collectTodayFromDOM();
+    const y=today.getFullYear(), m=today.getMonth();
+    const arr = loadMonth(y,m);
+    const key = today.toISOString().slice(0,10);
+    const idx = arr.findIndex(e=>e.dateISO.slice(0,10)===key);
+    if(idx>=0) arr[idx]=entry; else arr.push(entry);
+    saveMonth(y,m,arr);
+    renderMonth(y,m);
+    toggleEditMode(false);
+    alert("💾 금일 업무 저장 완료!");
+  }
+
+  function loadToday(){
+    const today = new Date();
+    const y = today.getFullYear(), m = today.getMonth();
+    const arr = loadMonth(y,m);
+    const key = today.toISOString().slice(0,10);
+    const found = arr.find(e=>e.dateISO.slice(0,10)===key);
+    if(found && found.workHtml){
+      todayList.innerHTML = found.workHtml;
+      toggleEditMode(false);
+    } else {
+      todayList.innerHTML = '<li>작성된 금일 업무가 없습니다.</li>';
+      toggleEditMode(false);
+    }
   }
 
   function exportData(){
@@ -297,6 +301,7 @@
         Object.entries(obj).forEach(([k,v])=>localStorage.setItem(k,JSON.stringify(v)));
         alert('데이터 불러오기 완료!');
         renderMonth(viewYear,viewMonth);
+        loadToday();
       }catch(e){alert('JSON 파일이 올바르지 않습니다.');}
     };
     fileInput.click();
@@ -304,24 +309,12 @@
 
   headerDateEl.textContent=formatDateLabel(new Date());
   renderMonth(viewYear,viewMonth);
+  loadToday();
+  editBtn.onclick=()=>toggleEditMode(true);
   saveTodayBtn.onclick=saveToday;
   exportBtn.onclick=exportData;
   importBtn.onclick=importData;
   window.renderMonth = renderMonth;
-
-  // ✅ 오늘 날짜의 데이터 자동 표시
-  (function loadTodayIfExists(){
-    const today = new Date();
-    const y = today.getFullYear(), m = today.getMonth();
-    const arr = JSON.parse(localStorage.getItem(`reports_${y}-${String(m+1).padStart(2,'0')}`) || '[]');
-    const key = today.toISOString().slice(0,10);
-    const found = arr.find(e => e.dateISO.slice(0,10) === key);
-    if(found && found.workHtml){
-      todayList.innerHTML = found.workHtml;
-      Array.from(todayList.querySelectorAll('li')).forEach(li => li.setAttribute('contenteditable','true'));
-      console.log('✅ 오늘 업무 자동 로드 완료');
-    }
-  })();
 })();
 
 // 🚀 GitHub Pages 자동 data.json 불러오기
@@ -332,7 +325,10 @@
       const json = await res.json();
       Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
       console.log('✅ data.json 로드 완료');
-      window.renderMonth?.(new Date().getFullYear(), new Date().getMonth());
+      const today = new Date();
+      window.renderMonth?.(today.getFullYear(), today.getMonth());
+      // 👉 금일 업무 즉시 표시
+      if (typeof loadToday === 'function') loadToday();
     } else {
       console.warn('⚠️ data.json 파일이 없습니다.');
     }
