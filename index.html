@@ -317,7 +317,7 @@
   window.renderMonth = renderMonth;
 })();
 
-// 🚀 GitHub Pages 자동 data.json 불러오기
+// 🚀 GitHub Pages 자동 data.json 불러오기 (무한 새로고침 방지)
 (async function loadSharedData(){
   try {
     const res = await fetch('data.json');
@@ -325,10 +325,15 @@
       const json = await res.json();
       Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
       console.log('✅ data.json 로드 완료');
-      const today = new Date();
-      window.renderMonth?.(today.getFullYear(), today.getMonth());
-      // 👉 금일 업무 즉시 표시
-      if (typeof loadToday === 'function') loadToday();
+
+      // 최초 1회만 새로고침하도록 플래그 사용
+      if (!localStorage.getItem('dataJsonLoadedOnce')) {
+        localStorage.setItem('dataJsonLoadedOnce', 'true');
+        console.log('🔄 최초 1회 자동 새로고침 실행');
+        window.location.reload();
+      } else {
+        console.log('✅ 이미 새로고침 반영 완료 — 다시 로드하지 않음');
+      }
     } else {
       console.warn('⚠️ data.json 파일이 없습니다.');
     }
