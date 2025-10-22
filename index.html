@@ -5,60 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>최준혁 - 일간 업무보고</title>
   <style>
-    :root{
-      --bg:#f8fafc;
-      --card:#ffffff;
-      --muted:#64748b;
-      --text:#1e293b;
-      --accent:#3b82f6;
-      --person-color:#f9fafb;
-      --person-border:#d4d7dc;
-      --person-text:#52575e;
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+      --text: #1e293b;
+      --accent: #3b82f6;
+      --person-color: #f9fafb;
+      --person-border: #d4d7dc;
+      --person-text: #52575e;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; padding:24px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
-      background:linear-gradient(180deg, var(--person-color), #ffffff);
-      color:var(--text);
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial,
+        "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+      background: linear-gradient(180deg, var(--person-color), #ffffff);
+      color: var(--text);
     }
-    .container{ max-width:900px; margin:0 auto; }
-    .today-header{
-      text-align:center; margin-bottom:32px; padding:32px 20px;
-      background:var(--person-color);
-      border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,.1);
-      border:2px solid var(--person-border);
+    .container { max-width: 900px; margin: 0 auto; }
+    .today-header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 32px 20px;
+      background: var(--person-color);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--person-border);
     }
-    .today-header h1{ margin:0; font-size:36px; font-weight:800; color:var(--person-text); letter-spacing:-.5px; }
-    .today-header .date{ margin:8px 0 0; font-size:20px; color:#334155; font-weight:600; }
-    .today-header .role{
-      margin-top:12px; display:inline-block; padding:6px 16px;
-      background:#dbeafe; color:#1e40af; border-radius:20px;
-      font-size:14px; font-weight:700; border:2px solid #93c5fd;
+    .today-header h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--person-text);
+      letter-spacing: -0.5px;
     }
-    .card{
-      background:var(--card); border:2px solid var(--person-border);
-      border-radius:16px; padding:24px; margin-bottom:24px;
-      box-shadow:0 6px 20px rgba(0,0,0,.08);
+    .today-header .date {
+      margin: 8px 0 0;
+      font-size: 20px;
+      color: #334155;
+      font-weight: 600;
     }
-    h2{ font-size:20px; margin:0 0 20px; color:var(--person-text);
-      font-weight:700; padding-bottom:12px; border-bottom:2px solid var(--person-border);}
-    .work-content ul{ margin:0; padding-left:24px; }
-    .work-content li{ margin:12px 0; font-size:15px; line-height:1.7; padding:6px; border-radius:6px;}
-    .work-content li[contenteditable="true"]{background:#fffdf6; outline:1px dashed #cbd5e1;}
-    .foot{ margin-top:20px; padding-top:16px; border-top:1px solid #e2e8f0; color:var(--muted); font-size:12px; text-align:center;}
-    .toolbar{ display:flex; gap:8px; justify-content:flex-end; margin-bottom:12px; flex-wrap:wrap;}
-    .toolbar button{
-      padding:8px 10px; border-radius:8px; border:1px solid var(--person-border);
-      background:var(--card); cursor:pointer; font-weight:600;
+    .today-header .role {
+      margin-top: 12px;
+      display: inline-block;
+      padding: 6px 16px;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 2px solid #93c5fd;
     }
-    .timeline{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0;}
-    .timeline button{padding:6px 8px; border-radius:6px; border:1px solid #e6eefc; background:transparent; cursor:pointer;}
-    .timeline button.current-month{ background:var(--accent); color:#fff; border-color:var(--accent);}
-    .timeline button.viewed{ background:#bfdbfe; color:#1e3a8a; border-color:#93c5fd;}
-    .timeline button.has-data{ background:#eef6ff; color:#1e40af; border-color:#dbeafe;}
-    .week-block{margin:10px 0; padding:10px; border-radius:8px; background:#fff; border:1px solid #eef2ff;}
-    .week-block h4{margin:0 0 8px; font-size:15px;}
+    .card {
+      background: var(--card);
+      border: 2px solid var(--person-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      font-size: 20px;
+      margin: 0 0 20px;
+      color: var(--person-text);
+      font-weight: 700;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--person-border);
+    }
+    .work-content ul { margin: 0; padding-left: 24px; }
+    .work-content li {
+      margin: 12px 0;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 6px;
+      border-radius: 6px;
+    }
+    .work-content li[contenteditable="true"] {
+      background: #fffdf6;
+      outline: 1px dashed #cbd5e1;
+    }
+    .foot {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .toolbar button {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--person-border);
+      background: var(--card);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .timeline {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 8px 0;
+    }
+    .timeline button {
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #e6eefc;
+      background: transparent;
+      cursor: pointer;
+    }
+    .timeline button.current-month { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .timeline button.viewed { background: #bfdbfe; color: #1e3a8a; border-color: #93c5fd; }
+    .timeline button.has-data { background: #eef6ff; color: #1e40af; border-color: #dbeafe; }
+    .week-block {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #eef2ff;
+    }
+    .week-block h4 { margin: 0 0 8px; font-size: 15px; }
   </style>
 </head>
 <body>
@@ -93,7 +166,7 @@
       <div id="monthSummary" class="month-summary">
         <p style="color:#64748b" id="noDataNotice">저장된 요약이 없습니다.</p>
       </div>
-      <div class="foot">* 데이터는 브라우저 localStorage에 저장되며, 내보내기/불러오기/공유 기능으로 확인 가능합니다.</div>
+      <div class="foot">* 데이터는 localStorage에 저장되며, JSON으로 내보내기 및 공유가 가능합니다.</div>
     </div>
   </div>
 
@@ -113,7 +186,7 @@
   let viewMonth = new Date().getMonth();
 
   function formatDateLabel(d){
-    return new Intl.DateTimeFormat('ko-KR', {year:'numeric', month:'numeric', day:'numeric', weekday:'short'}).format(d);
+    return new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'numeric',day:'numeric',weekday:'short'}).format(d);
   }
   function monthKey(y,m){ return `reports_${y}-${String(m+1).padStart(2,'0')}`; }
   function loadMonth(y,m){ return JSON.parse(localStorage.getItem(monthKey(y,m))||'[]'); }
@@ -140,7 +213,6 @@
     alert("💾 금일 업무가 저장되었습니다!");
   }
 
-  // Enter로 새 항목 추가 / 빈 줄에서 Backspace로 삭제
   todayList.addEventListener('keydown', e=>{
     if(e.key==='Enter'){
       e.preventDefault();
@@ -190,7 +262,8 @@
     Object.keys(groups).sort((a,b)=>a-b).forEach(wk=>{
       const block=document.createElement('div');
       block.className='week-block';
-      const h=document.createElement('h4');h.textContent=`${m+1}월 ${wk}주차`;block.appendChild(h);
+      const h=document.createElement('h4');
+      h.textContent=`${m+1}월 ${wk}주차`;block.appendChild(h);
       groups[wk].forEach(it=>{
         const wrap=document.createElement('div');
         wrap.style.cssText="margin-bottom:12px;padding:8px;border:1px solid #eef6ff;border-radius:6px;background:#fbfdff";
@@ -235,9 +308,23 @@
   exportBtn.onclick=exportData;
   importBtn.onclick=importData;
   window.renderMonth = renderMonth;
+
+  // ✅ 오늘 날짜의 데이터 자동 표시
+  (function loadTodayIfExists(){
+    const today = new Date();
+    const y = today.getFullYear(), m = today.getMonth();
+    const arr = JSON.parse(localStorage.getItem(`reports_${y}-${String(m+1).padStart(2,'0')}`) || '[]');
+    const key = today.toISOString().slice(0,10);
+    const found = arr.find(e => e.dateISO.slice(0,10) === key);
+    if(found && found.workHtml){
+      todayList.innerHTML = found.workHtml;
+      Array.from(todayList.querySelectorAll('li')).forEach(li => li.setAttribute('contenteditable','true'));
+      console.log('✅ 오늘 업무 자동 로드 완료');
+    }
+  })();
 })();
 
-// 🚀 GitHub Pages 자동 불러오기 기능
+// 🚀 GitHub Pages 자동 data.json 불러오기
 (async function loadSharedData(){
   try {
     const res = await fetch('data.json');
