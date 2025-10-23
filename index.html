@@ -11,91 +11,71 @@
       --muted: #64748b;
       --text: #1e293b;
       --accent: #3b82f6;
-      --person-color: #f9fafb;
-      --person-border: #d4d7dc;
-      --person-text: #52575e;
+      --border: #d4d7dc;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0; padding: 24px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial,
-        "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
-      background: linear-gradient(180deg, var(--person-color), #ffffff);
+      font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
       color: var(--text);
     }
     .container { max-width: 900px; margin: 0 auto; }
+
     .today-header {
       text-align: center;
-      margin-bottom: 32px;
+      background: #f9fafb;
       padding: 32px 20px;
-      background: var(--person-color);
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border: 2px solid var(--person-border);
+      border: 2px solid var(--border);
+      margin-bottom: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-    .today-header h1 {
-      margin: 0;
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--person-text);
-      letter-spacing: -0.5px;
-    }
-    .today-header .date {
-      margin: 8px 0 0;
-      font-size: 20px;
-      color: #334155;
-      font-weight: 600;
-    }
+    .today-header h1 { margin: 0; font-size: 36px; font-weight: 800; color: #334155; }
     .today-header .role {
-      margin-top: 12px;
-      display: inline-block;
+      margin-top: 10px;
       padding: 6px 16px;
+      display: inline-block;
       background: #dbeafe;
-      color: #1e40af;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 700;
       border: 2px solid #93c5fd;
+      color: #1e3a8a;
+      border-radius: 20px;
+      font-size: 14px; font-weight: 700;
     }
+    .today-header .date { margin-top: 8px; font-weight: 600; color: #475569; }
+
     .card {
       background: var(--card);
-      border: 2px solid var(--person-border);
+      border: 2px solid var(--border);
       border-radius: 16px;
       padding: 24px;
       margin-bottom: 24px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
     }
     h2 {
       font-size: 20px;
-      margin: 0 0 20px;
-      color: var(--person-text);
-      font-weight: 700;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--person-border);
+      margin: 0 0 16px;
+      color: #1e293b;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
     }
-    .work-content ul { margin: 0; padding-left: 24px; }
+    .work-content ul { list-style: disc; margin: 0; padding-left: 24px; }
     .work-content li {
-      margin: 12px 0;
+      margin: 8px 0;
       font-size: 15px;
       line-height: 1.7;
-      padding: 6px;
       border-radius: 6px;
     }
+    .work-content b { color: #1e3a8a; }
+
     .work-content li[contenteditable="true"] {
       background: #fffdf6;
       outline: 1px dashed #cbd5e1;
+      padding: 4px;
     }
-    .foot {
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid #e2e8f0;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
+
     .toolbar {
-      display: flex;
-      gap: 8px;
+      display: flex; gap: 8px;
       justify-content: flex-end;
       margin-bottom: 12px;
       flex-wrap: wrap;
@@ -103,35 +83,27 @@
     .toolbar button {
       padding: 8px 10px;
       border-radius: 8px;
-      border: 1px solid var(--person-border);
+      border: 1px solid var(--border);
       background: var(--card);
       cursor: pointer;
       font-weight: 600;
     }
-    .timeline {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin: 8px 0;
-    }
+
+    .timeline { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
     .timeline button {
       padding: 6px 8px;
       border-radius: 6px;
-      border: 1px solid #e6eefc;
+      border: 1px solid #e2e8f0;
       background: transparent;
       cursor: pointer;
     }
     .timeline button.current-month { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .timeline button.viewed { background: #bfdbfe; color: #1e3a8a; border-color: #93c5fd; }
     .timeline button.has-data { background: #eef6ff; color: #1e40af; border-color: #dbeafe; }
-    .week-block {
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px solid #eef2ff;
-    }
-    .week-block h4 { margin: 0 0 8px; font-size: 15px; }
+
+    .week-block { margin: 10px 0; padding: 10px; border-radius: 8px; background: #fff; border: 1px solid #eef2ff; }
+    .week-block h4 { margin: 0 0 8px; font-size: 15px; color: #475569; }
+
+    .foot { text-align: center; margin-top: 16px; color: var(--muted); font-size: 12px; }
   </style>
 </head>
 <body>
@@ -151,9 +123,7 @@
 
     <div class="card" id="todayCard">
       <h2>📋 금일 업무 내용</h2>
-      <div class="work-content">
-        <ul id="todayList"></ul>
-      </div>
+      <div class="work-content"><ul id="todayList"></ul></div>
     </div>
 
     <div class="card">
@@ -162,21 +132,20 @@
         <div id="currentYearLabel" style="font-weight:700"></div>
         <div class="timeline" id="monthTimeline"></div>
       </div>
-      <div id="monthSummary" class="month-summary">
-        <p style="color:#64748b" id="noDataNotice">저장된 요약이 없습니다.</p>
-      </div>
+      <div id="monthSummary"></div>
+      <p id="noDataNotice" style="color:#64748b;text-align:center">저장된 요약이 없습니다.</p>
       <div class="foot">* 데이터는 localStorage에 저장되며, JSON으로 내보내기 및 공유가 가능합니다.</div>
     </div>
   </div>
 
 <script>
-(function(){
-  const headerDateEl = document.getElementById('headerDate');
+(async function main(){
   const todayList = document.getElementById('todayList');
   const editBtn = document.getElementById('editBtn');
-  const saveTodayBtn = document.getElementById('saveTodayBtn');
+  const saveBtn = document.getElementById('saveTodayBtn');
   const exportBtn = document.getElementById('exportBtn');
   const importBtn = document.getElementById('importBtn');
+  const headerDate = document.getElementById('headerDate');
   const monthTimeline = document.getElementById('monthTimeline');
   const monthSummary = document.getElementById('monthSummary');
   const noDataNotice = document.getElementById('noDataNotice');
@@ -188,21 +157,44 @@
   function formatDateLabel(d){
     return new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'numeric',day:'numeric',weekday:'short'}).format(d);
   }
+
   function monthKey(y,m){ return `reports_${y}-${String(m+1).padStart(2,'0')}`; }
   function loadMonth(y,m){ return JSON.parse(localStorage.getItem(monthKey(y,m))||'[]'); }
-  function saveMonth(y,m,arr){ localStorage.setItem(monthKey(y,m), JSON.stringify(arr)); }
+  function saveMonth(y,m,arr){ localStorage.setItem(monthKey(y,m),JSON.stringify(arr)); }
+
+  function normalizeWorkHtml(html){
+    if(!html) return '';
+    const tmp=document.createElement('div');
+    tmp.innerHTML=html;
+    const items=[];
+    tmp.querySelectorAll('li').forEach(li=>{
+      const text=li.innerHTML.replace(/<[^>]+>/g,(tag)=>{
+        return tag.startsWith('<b')?tag:''; // only keep <b>
+      }).trim();
+      if(text) items.push(`<li>${text}</li>`);
+    });
+    if(!items.length){
+      tmp.querySelectorAll('div').forEach(div=>{
+        const clean=div.textContent.trim();
+        if(clean) items.push(`<li>${clean}</li>`);
+      });
+    }
+    return `<ul>${items.join('')}</ul>`;
+  }
 
   function collectTodayFromDOM(){
-    const items = Array.from(todayList.children).map(li=>li.innerHTML.trim()).filter(t=>t!=='');
-    const workHtml = `<ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
-    const today = new Date();
-    return { dateISO: today.toISOString(), dateLabel: formatDateLabel(today), workHtml };
+    const items=[...todayList.querySelectorAll('li')].map(li=>li.innerHTML.trim()).filter(Boolean);
+    return {
+      dateISO: new Date().toISOString(),
+      dateLabel: formatDateLabel(new Date()),
+      workHtml: `<ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>`
+    };
   }
 
   function renderTimeline(y){
-    currentYearLabel.textContent = `${y}년`;
+    currentYearLabel.textContent=`${y}년`;
     monthTimeline.innerHTML='';
-    const today = new Date();
+    const today=new Date();
     for(let m=0;m<12;m++){
       const btn=document.createElement('button');
       btn.textContent=`${m+1}월`;
@@ -221,6 +213,7 @@
     noDataNotice.style.display='none';
     const groups={};
     data.forEach(it=>{
+      it.workHtml=normalizeWorkHtml(it.workHtml);
       const dt=new Date(it.dateISO);
       const wk=Math.ceil((dt.getDate()+((new Date(dt.getFullYear(),dt.getMonth(),1).getDay()+6)%7))/7);
       (groups[wk]??=[]).push(it);
@@ -228,118 +221,103 @@
     Object.keys(groups).sort((a,b)=>a-b).forEach(wk=>{
       const block=document.createElement('div');
       block.className='week-block';
-      const h=document.createElement('h4'); h.textContent=`${m+1}월 ${wk}주차`;
-      block.appendChild(h);
+      block.innerHTML=`<h4>${m+1}월 ${wk}주차</h4>`;
       groups[wk].forEach(it=>{
         const wrap=document.createElement('div');
         wrap.style.cssText="margin-bottom:12px;padding:8px;border:1px solid #eef6ff;border-radius:6px;background:#fbfdff";
-        wrap.innerHTML=`<div style="font-weight:700">${it.dateLabel}</div><div style="margin-top:8px;line-height:1.6">${it.workHtml}</div>`;
+        wrap.innerHTML=`<div style='font-weight:700'>${it.dateLabel}</div><div style='margin-top:8px;line-height:1.6'>${normalizeWorkHtml(it.workHtml)}</div>`;
         block.appendChild(wrap);
       });
       monthSummary.appendChild(block);
     });
   }
 
-  function toggleEditMode(enable){
-    Array.from(todayList.querySelectorAll('li')).forEach(li=>{
-      li.contentEditable = enable;
-      li.style.background = enable ? '#fffdf6' : 'transparent';
-    });
-    editBtn.disabled = enable;
-    saveTodayBtn.disabled = !enable;
+  function toggleEdit(enable){
+    [...todayList.querySelectorAll('li')].forEach(li=>li.contentEditable=enable);
+    editBtn.disabled=enable; saveBtn.disabled=!enable;
   }
 
   function saveToday(){
-    const today = new Date();
-    const entry = collectTodayFromDOM();
+    const today=new Date();
     const y=today.getFullYear(), m=today.getMonth();
-    const arr = loadMonth(y,m);
-    const key = today.toISOString().slice(0,10);
-    const idx = arr.findIndex(e=>e.dateISO.slice(0,10)===key);
+    const arr=loadMonth(y,m);
+    const entry=collectTodayFromDOM();
+    const key=today.toISOString().slice(0,10);
+    const idx=arr.findIndex(e=>e.dateISO.slice(0,10)===key);
     if(idx>=0) arr[idx]=entry; else arr.push(entry);
     saveMonth(y,m,arr);
     renderMonth(y,m);
-    toggleEditMode(false);
+    toggleEdit(false);
     alert("💾 금일 업무 저장 완료!");
   }
 
   function loadToday(){
-    const today = new Date();
-    const y = today.getFullYear(), m = today.getMonth();
-    const arr = loadMonth(y,m);
-    const key = today.toISOString().slice(0,10);
-    const found = arr.find(e=>e.dateISO.slice(0,10)===key);
+    const today=new Date();
+    const y=today.getFullYear(),m=today.getMonth();
+    const arr=loadMonth(y,m);
+    const key=today.toISOString().slice(0,10);
+    const found=arr.find(e=>e.dateISO.slice(0,10)===key);
     if(found && found.workHtml){
-      todayList.innerHTML = found.workHtml;
-      toggleEditMode(false);
+      todayList.innerHTML=normalizeWorkHtml(found.workHtml);
     } else {
-      todayList.innerHTML = '<li>작성된 금일 업무가 없습니다.</li>';
-      toggleEditMode(false);
+      todayList.innerHTML='<li><b>기사 작성</b>: </li><li><b>PressAI 검증</b>: </li><li><b>개발 관련</b>: </li>';
     }
+    toggleEdit(false);
   }
 
   function exportData(){
-    const allKeys = Object.keys(localStorage).filter(k=>k.startsWith('reports_'));
-    const obj={};
-    allKeys.forEach(k=>obj[k]=JSON.parse(localStorage.getItem(k)));
-    const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+    const keys=Object.keys(localStorage).filter(k=>k.startsWith('reports_'));
+    const obj={}; keys.forEach(k=>obj[k]=JSON.parse(localStorage.getItem(k)));
+    const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
-    a.download="reports_data.json";
-    a.click();
+    a.download='reports_data.json'; a.click();
   }
 
   async function importData(){
-    const fileInput=document.createElement('input');
-    fileInput.type='file'; fileInput.accept='.json';
-    fileInput.onchange=async()=>{
-      const file=fileInput.files[0];
-      if(!file)return;
-      const text=await file.text();
+    const inp=document.createElement('input'); inp.type='file'; inp.accept='.json';
+    inp.onchange=async()=>{
+      const file=inp.files[0]; if(!file) return;
       try{
-        const obj=JSON.parse(text);
+        const text=await file.text(); const obj=JSON.parse(text);
         Object.entries(obj).forEach(([k,v])=>localStorage.setItem(k,JSON.stringify(v)));
-        alert('데이터 불러오기 완료!');
-        renderMonth(viewYear,viewMonth);
-        loadToday();
-      }catch(e){alert('JSON 파일이 올바르지 않습니다.');}
+        alert('☁️ 불러오기 완료');
+        renderMonth(viewYear,viewMonth); loadToday();
+      }catch(e){alert('JSON 파일 형식 오류');}
     };
-    fileInput.click();
+    inp.click();
   }
 
-  headerDateEl.textContent=formatDateLabel(new Date());
-  renderMonth(viewYear,viewMonth);
-  loadToday();
-  editBtn.onclick=()=>toggleEditMode(true);
-  saveTodayBtn.onclick=saveToday;
-  exportBtn.onclick=exportData;
-  importBtn.onclick=importData;
-  window.renderMonth = renderMonth;
-})();
-
-// 🚀 GitHub Pages 자동 data.json 불러오기 (무한 새로고침 방지)
-(async function loadSharedData(){
+  // ✅ 자동 data.json 로드 (같은 레포지토리)
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', {cache: "no-store"});
     if (res.ok) {
       const json = await res.json();
       Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
       console.log('✅ data.json 로드 완료');
 
-      // 최초 1회만 새로고침하도록 플래그 사용
       if (!localStorage.getItem('dataJsonLoadedOnce')) {
         localStorage.setItem('dataJsonLoadedOnce', 'true');
-        console.log('🔄 최초 1회 자동 새로고침 실행');
-        window.location.reload();
+        console.log('🔄 최초 1회 자동 새로고침');
+        location.reload();
       } else {
-        console.log('✅ 이미 새로고침 반영 완료 — 다시 로드하지 않음');
+        console.log('✅ data.json 이미 반영됨');
       }
     } else {
-      console.warn('⚠️ data.json 파일이 없습니다.');
+      console.warn('⚠️ data.json 없음 — 새로고침 생략');
     }
   } catch (e) {
     console.warn('⚠️ data.json 불러오기 실패:', e);
   }
+
+  // 초기 렌더링
+  headerDate.textContent=formatDateLabel(new Date());
+  renderMonth(viewYear,viewMonth);
+  loadToday();
+  editBtn.onclick=()=>toggleEdit(true);
+  saveBtn.onclick=saveToday;
+  exportBtn.onclick=exportData;
+  importBtn.onclick=importData;
 })();
 </script>
 </body>
