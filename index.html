@@ -59,15 +59,21 @@
       border-bottom: 2px solid #e2e8f0;
       padding-bottom: 8px;
     }
-    .work-content ul { list-style: disc; margin: 0; padding-left: 24px; }
-    .work-content li {
-      margin: 8px 0;
-      font-size: 15px;
-      line-height: 1.7;
-      border-radius: 6px;
+    .work-content ul {
+      list-style: disc;
+      margin: 0;
+      padding-left: 24px;
     }
-    .work-content b { color: #1e3a8a; }
-
+    .work-content li {
+      margin-bottom: 10px;     /* ✅ 문단 간 여백 */
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    .work-content li b {
+      font-weight: 700;        /* ✅ 항목명만 굵게 */
+      color: #1e3a8a;
+    }
     .work-content li[contenteditable="true"] {
       background: #fffdf6;
       outline: 1px dashed #cbd5e1;
@@ -162,23 +168,24 @@
   function loadMonth(y,m){ return JSON.parse(localStorage.getItem(monthKey(y,m))||'[]'); }
   function saveMonth(y,m,arr){ localStorage.setItem(monthKey(y,m),JSON.stringify(arr)); }
 
+  // ✅ HTML 정규화: <ul><li>만 남기고 <b> 항목명만 유지
   function normalizeWorkHtml(html){
     if(!html) return '';
     const tmp=document.createElement('div');
     tmp.innerHTML=html;
     const items=[];
-    tmp.querySelectorAll('li').forEach(li=>{
-      const text=li.innerHTML.replace(/<[^>]+>/g,(tag)=>{
-        return tag.startsWith('<b')?tag:''; // only keep <b>
-      }).trim();
-      if(text) items.push(`<li>${text}</li>`);
+    tmp.querySelectorAll('li, div').forEach(el=>{
+      const raw=el.innerHTML
+        .replace(/<br\s*\/?>/g,'')
+        .replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'')
+        .replace(/<font[^>]*>/g,'').replace(/<\/font>/g,'')
+        .replace(/<div[^>]*>/g,'').replace(/<\/div>/g,'')
+        .trim();
+      if(raw){
+        const normalized=raw.replace(/^<b>([^<]+)<\/b>\s*:?\s*/, '<b>$1</b>: ');
+        items.push(`<li>${normalized}</li>`);
+      }
     });
-    if(!items.length){
-      tmp.querySelectorAll('div').forEach(div=>{
-        const clean=div.textContent.trim();
-        if(clean) items.push(`<li>${clean}</li>`);
-      });
-    }
     return `<ul>${items.join('')}</ul>`;
   }
 
@@ -288,29 +295,25 @@
     inp.click();
   }
 
-  // ✅ 자동 data.json 로드 (같은 레포지토리)
+  // ✅ data.json 자동 로드 (같은 레포지토리, 최초 1회 새로고침)
   try {
     const res = await fetch('data.json', {cache: "no-store"});
     if (res.ok) {
       const json = await res.json();
       Object.entries(json).forEach(([k, v]) => localStorage.setItem(k, JSON.stringify(v)));
       console.log('✅ data.json 로드 완료');
-
       if (!localStorage.getItem('dataJsonLoadedOnce')) {
         localStorage.setItem('dataJsonLoadedOnce', 'true');
-        console.log('🔄 최초 1회 자동 새로고침');
+        console.log('🔄 최초 1회 새로고침');
         location.reload();
-      } else {
-        console.log('✅ data.json 이미 반영됨');
       }
     } else {
-      console.warn('⚠️ data.json 없음 — 새로고침 생략');
+      console.warn('⚠️ data.json 없음 — 무시');
     }
   } catch (e) {
     console.warn('⚠️ data.json 불러오기 실패:', e);
   }
 
-  // 초기 렌더링
   headerDate.textContent=formatDateLabel(new Date());
   renderMonth(viewYear,viewMonth);
   loadToday();
